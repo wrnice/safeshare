@@ -183,14 +183,14 @@ upload.modules.addmodule({
     uploaded: function (data, response) {
 		
 		//console.log ('uploaded: data : ' , data );
-		
-        /*upload.download.delkeys[data.ident] = response.delkey
+				
+        upload.download.delkeys[data.ident] = data.ident;
 
         try {
-            localStorage.setItem('delete-' + data.ident, response.delkey)
+            localStorage.setItem('delete-' + data.ident, data.ident)
         } catch (e) {
             console.log(e)
-        } */
+        } 
 
         if (window.location.hash == '#noref') {
             history.replaceState(undefined, undefined, '#' + data.seed)

@@ -17,7 +17,7 @@ upload.modules.addmodule({
         <div id="btnarea">\
                 <a class="btn" id="dlbtn" href="#">Download</a\
                 ><a class="btn" id="inbrowserbtn" target="_blank" href="#">View In Browser</a\
-                ><a class="btn" id="deletebtn" href="#">Delete</a\
+                ><a class="btn" id="deletebtn" >Delete</a\
                 ><div class="right"><a class="btn" id="prevbtn" href="#">Prev</a\
                 ><a class="btn" id="nextbtn" href="#">Next</a\
                 ><a class="btn" id="helpbtn" >Help</a\
@@ -26,10 +26,13 @@ upload.modules.addmodule({
         </div>\
         <div id="donatemearea" class="donate"><img src="donate.png">\
         </div>\
+        <div id="deleted" class="deleted"><h1>File successfully deleted</h1>\
+        </div>\
         <div id="helparea" class="help">&nbsp;To share this file, copy and send the link that appears in your browser\'s adress bar.<br><br><br><br>\
         "New Upload" : click to upload another file<br><br>\
         "Download" : click to download the file to your local drive<br><br>\
         "View in Browser" : click to view the file in full size<br><br>\
+        "Delete" : click to delete a file that you uploaded<br>\
         "Help" : hover to display this help<br><br>\
         "Donate" : hover to display bitcoin donation adress qrcode , click to send a donation to support SafeShare development\
         </div>\
@@ -41,6 +44,7 @@ upload.modules.addmodule({
       $(document).on('mouseout', '#helpbtn', this.help.bind(this))
       $(document).on('mouseover', '#donatemebtn', this.donateme.bind(this))
       $(document).on('mouseout', '#donatemebtn', this.donateme.bind(this))
+      $(document).on('click', '#deletebtn', this.deletefile.bind(this))
     },
     route: function (route, content) {
         if (content != 'noref') {
@@ -55,6 +59,7 @@ upload.modules.addmodule({
         this._.filename = view.find('#downloaded_filename')
         this._.btns = view.find('#btnarea')
         this._.deletebtn = view.find('#deletebtn')
+        this._.deleted = view.find('#deleted')
         this._.donatemebtn = view.find('#donatemebtn')
         this._.dlbtn = view.find('#dlbtn')
         this._.nextbtn = view.find('#nextbtn')
@@ -72,6 +77,7 @@ upload.modules.addmodule({
         $('#waiting').hide()
         $('#helparea').hide()
         $('#donatemearea').hide()
+        $('#deleted').hide()
     },
     initroute: function (content, contentroot) {
         contentroot = contentroot ? contentroot : content
@@ -107,6 +113,7 @@ upload.modules.addmodule({
         this._.content.main = this._.content.loading = $('<h1>').prop('id', 'downloadprogress').addClass('centertext centerable').text('Downloading')
         this._.detailsarea.empty().append(this._.content.main)
         this._.deletebtn.hide()
+        this._.deleted.hide()
         upload.updown.download(content, this.progress.bind(this), this.downloaded.bind(this))
     },
     unrender: function () {
@@ -177,25 +184,27 @@ upload.modules.addmodule({
 		this._.filename.text(data.header.name)
         this._.title.text(data.header.name + ' - SafeShare')
 
-/*
- * 
- *  TODO delete file
- * 
- * 
         var stored = this.delkeys[data.ident]
 
         if (!stored) {
             try {
                 stored = localStorage.getItem('delete-' + data.ident)
+                
             } catch (e) {
                 console.log(e)
             }
         }
+		
+		try {
+            localStorage.setItem('delkey' , stored)
+        } catch (e) {
+            console.log(e)
+        } 
 
         if (stored && !isiframed()) {
-            this._.deletebtn.show().prop('href', (upload.config.server ? upload.config.server : '') + 'del?delkey=' + stored + '&ident=' + data.ident)
+		   this._.deletebtn.show()
         }
-*/
+
         this._.newupload.show()
 
         var association = this.getassociation(data.header.mime)
@@ -214,6 +223,7 @@ upload.modules.addmodule({
         this._.dlbtn.prop('href', url)
         this._.dlbtn.prop('download', data.header.name)
         this._.donatemebtn.prop('href', upload.config.donate_key )
+        
         
 
         delete this._['content']
@@ -286,6 +296,17 @@ upload.modules.addmodule({
 	{ this._.donatemearea.show();this._.detailsarea.hide();} else
 	{ this._.donatemearea.hide();this._.detailsarea.show();
     }       
+    },
+    deletefile: function() {      
+      filename = localStorage.getItem('delkey' ) ;
+      console.log ( 'delete : ident : ', filename ); 
+      deletename ( filename )
+      this._.detailsarea.hide();
+      this._.deletebtn.hide();
+      this._.viewbtn.hide()
+      this._.dlbtn.hide();
+      this._.filename.hide();
+      this._.deleted.show();      
     },
     progress: function (e) {
 				

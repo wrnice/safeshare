@@ -155,7 +155,7 @@ function addError(element, error) {
     function addErrorreadservice(element, error) {
 	var deferred = $.Deferred();	
   console.log("read service error : " ,error.toString());
-  if ( error.status == -1503 ) upload.download.progress('error') 
+  upload.download.progress('error') 
   return deferred.promise();
  }
  
@@ -242,7 +242,15 @@ function createdir ( dirname ) {
               //  console.log ( 'createdir : Created directory.');
               }, addErrorcreatedir.bind(null, dirname));
 	return deferred.promise();
-}              
+}          
+
+function deletename ( name ) {
+	var deferred = $.Deferred();
+	            Safe.dns.deleteName(name).then(function() {
+                console.log ( 'deletename: Deleted name "'+name+'".');
+              }, addErrorcreatedir.bind(null, name));
+	return deferred.promise();
+}    
 
 function createservice ( filename ) {
 	var deferred = $.Deferred();
