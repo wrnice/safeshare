@@ -32,7 +32,6 @@ upload.modules.addmodule({
         "New Upload" : click to upload another file<br><br>\
         "Download" : click to download the file to your local drive<br><br>\
         "View in Browser" : click to view the file in full size<br><br>\
-        "Delete" : click to delete a file that you uploaded<br>\
         "Help" : hover to display this help<br><br>\
         "Donate" : hover to display bitcoin donation adress qrcode , click to send a donation to support SafeShare development\
         </div>\
@@ -299,13 +298,12 @@ upload.modules.addmodule({
     },
     deletefile: function() {      
       filename = localStorage.getItem('delkey' ) ;
-      console.log ( 'delete : ident : ', filename ); 
+      //console.log ( 'delete : ident : ', filename ); 
       deletename ( filename )
       this._.detailsarea.hide();
-      this._.deletebtn.hide();
-      this._.viewbtn.hide()
-      this._.dlbtn.hide();
+      this._.btns.hide();
       this._.filename.hide();
+      this._.editpaste.hide()
       this._.deleted.show();      
     },
     progress: function (e) {

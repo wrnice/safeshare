@@ -170,7 +170,7 @@ function addError(element, error) {
  
 function initialize(node) {
 	  Safe = new SafeApp({
-			  id: 'myid',
+			  id: myid',
 			  name: 'safeshare',
 			  vendor: 'nice',
 			  version: '0.0.1'
@@ -247,7 +247,7 @@ function createdir ( dirname ) {
 function deletename ( name ) {
 	var deferred = $.Deferred();
 	            Safe.dns.deleteName(name).then(function() {
-                console.log ( 'deletename: Deleted name "'+name+'".');
+                console.log ( 'File Deleted.');
               }, addErrorcreatedir.bind(null, name));
 	return deferred.promise();
 }    
