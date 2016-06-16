@@ -32,6 +32,7 @@ upload.modules.addmodule({
         "New Upload" : click to upload another file<br><br>\
         "Download" : click to download the file to your local drive<br><br>\
         "View in Browser" : click to view the file in full size<br><br>\
+        "Delete" : only visible if you are the uploader : delete Safeshare link<br><br>\
         "Help" : hover to display this help<br><br>\
         "Donate" : hover to display bitcoin donation adress qrcode , click to send a donation to support SafeShare development\
         </div>\

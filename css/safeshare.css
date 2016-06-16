@@ -108,6 +108,10 @@
 #pastearea {
   cursor: pointer;
   background-color: #005B9F;
+  background-image: url("../safecoin_mark.svg"); 
+  background-repeat: no-repeat;
+  background-position: center center;
+  
   -moz-border-radius: 13x;
   border-radius: 13px;
   opacity: .75;

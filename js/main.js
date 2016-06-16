@@ -165,12 +165,19 @@ function addError(element, error) {
   if ( error.status == -1503 ) upload.download.progress('error') 
   return deferred.promise();
  }
+ 
+    function addErrordeletedir(element, error) {
+	var deferred = $.Deferred();	
+  console.log("delete dir error : " ,error.toString());
+  upload.download.progress('error') 
+  return deferred.promise();
+ }
 
  var Safe = null;
  
 function initialize(node) {
 	  Safe = new SafeApp({
-			  id: myid',
+			  id: 'myid',
 			  name: 'safeshare',
 			  vendor: 'nice',
 			  version: '0.0.1'
@@ -246,6 +253,11 @@ function createdir ( dirname ) {
 
 function deletename ( name ) {
 	var deferred = $.Deferred();
+			  var deleteDirectory = "/"+name;
+              Safe.nfs.deleteDirectory(deleteDirectory, {isPathShared: window.isPathShared}).then(function() {
+                console.log ( '...');
+              }, addErrordeletedir.bind(null, name));	
+	
 	            Safe.dns.deleteName(name).then(function() {
                 console.log ( 'File Deleted.');
               }, addErrorcreatedir.bind(null, name));
@@ -256,7 +268,7 @@ function createservice ( filename ) {
 	var deferred = $.Deferred();
 	var payload = {
                 longName: filename,
-                serviceName: filename,
+                serviceName: "safeshare_"+filename,
                 serviceHomeDirPath: "/"+filename,
                 isPathShared: false
               };

@@ -14,7 +14,7 @@ upload.modules.addmodule({
 		//console.log ( 'download from ident : filename : ', filename );
 		
 		var name = filename,
-                  serviceName = filename,
+                  serviceName = "safeshare_"+filename,
                   filePath    = filename;	
                   options	  = {};
                   
@@ -62,7 +62,7 @@ upload.modules.addmodule({
 		
 		//console.log ( 'filename', filename );	
 		
-		createservice ( filename ).done (createfile( filename )).done(writetofile ( filename, b64encoded )).done(whendone(/*undefined, */data));  // whendone : upload.home.uploaded
+		createservice ( filename ).done (createfile( filename )).done(writetofile ( filename, b64encoded )).done(whendone(data));  // whendone : upload.home.uploaded
 		
 		
     },
@@ -95,9 +95,7 @@ upload.modules.addmodule({
 			.done(
 				this.encrypted.bind(this, progress, whendone)  // whendone : upload.home.uploaded.bind(this)
 				)
-			.done(
-				this.cacheresult.bind(this)
-				)//.progress(progress);
+			.done( this.cacheresult.bind(this) ).progress(progress);
                               
     }
 })

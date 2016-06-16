@@ -16,7 +16,6 @@ function getSeed() {
 
 var worker = new Worker("./js/encryption.js")
 
-
 var promises = {}
 
 function str2ab(str) {
