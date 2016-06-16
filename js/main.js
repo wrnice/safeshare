@@ -177,7 +177,7 @@ function addError(element, error) {
  
 function initialize(node) {
 	  Safe = new SafeApp({
-			  id: 'myid',
+			  id: 'safeid',
 			  name: 'safeshare',
 			  vendor: 'nice',
 			  version: '0.0.1'
@@ -315,6 +315,8 @@ upload.load.needsome().need('config.js').need('js/shims.js').need('deps/zepto.mi
 			} else {
 				//console.log ( "canceled");
 				document.getElementById('waitauth').className = 'hidden';
+				document.getElementById('waitnet').className = 'hidden';
+				document.getElementById('canceled').className = 'waiting';
 			    return;
 			} 		   
 		  
