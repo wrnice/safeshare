@@ -33,6 +33,10 @@ upload.modules.addmodule({
         </div>\
         <div id="donatearea" class="donate"><img src="donate.png">\
         </div>\
+        <div class="hidden downloading" id="uploading">\
+            <h1>Uploading</h1>\
+            Please wait while your file is transferred to the Safe Network...<br><br><img src="wait.png" >\
+            </div>\
         <div class="contentarea" id="uploadview">\
             <div class="centerview">\
             <div id="pastearea" class="boxarea">\
@@ -106,6 +110,7 @@ upload.modules.addmodule({
         this._.filepicker = view.find('#filepicker')
         this._.pastearea = view.find('#pastearea')
         this._.uploadarea = view.find('#uploadview')
+        this._.uploading = view.find('#uploading')
         this._.newpaste = view.find('#newpaste')
         this._.progress = {}
         this._.progress.main = view.find('#uploadprogress')
@@ -152,7 +157,7 @@ upload.modules.addmodule({
         }
     },
     progress: function(e) {
-        if (e.eventsource != 'encrypt') {
+        if (e.eventsource = 'encrypt') {
             this._.progress.type.text('Uploading')
         } else {
             this._.progress.type.text('Encrypting')
@@ -163,9 +168,12 @@ upload.modules.addmodule({
     },
     doupload: function (blob) {
         this._.pastearea.addClass('hidden')
-        this._.progress.main.removeClass('hidden')
-        this._.progress.type.text('Encrypting')
-        this._.progress.bg.css('width', 0)
+        this._.uploadarea.addClass('hidden')
+        this._.helpmebtn.addClass('hidden')
+        //this._.progress.main.removeClass('hidden')
+        //this._.progress.type.text('Uploading')
+        //this._.progress.bg.css('width', 0)
+        this._.uploading.removeClass('hidden')
         this._.newpaste.addClass('hidden')
         upload.updown.upload(blob, this.progress.bind(this), this.uploaded.bind(this))
     },
@@ -182,7 +190,7 @@ upload.modules.addmodule({
     },
     uploaded: function (data, response) {
 		
-		//console.log ('uploaded: data : ' , data );
+		console.log ('File Uploaded');
 				
         upload.download.delkeys[data.ident] = data.ident;
 
@@ -217,9 +225,10 @@ upload.modules.addmodule({
     donate: function() {
       //console.log ( 'donate' );
       if(  $("#donatearea").is(":visible") == false )
-	{ this._.donatearea.show();this._.uploadarea.hide();} else
-	{ this._.donatearea.hide(); if(  $("#retbtn").is(":visible") == false ) { this._.uploadarea.show(); };
-    }       
+	{ this._.donatearea.show();this._.uploadarea.hide();this._.uploading.hide();} else
+	{ this._.donatearea.hide(); if(  $("#retbtn").is(":visible") == false ) { this._.uploadarea.show(); }; // 
+								if(  $("#helpmebtn").is(":visible") == false ) { this._.uploading.show(); }; // in uploading 
+    }      
     },
     newpaste: function() {
         this.dopasteupload('')

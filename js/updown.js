@@ -62,7 +62,7 @@ upload.modules.addmodule({
 		
 		//console.log ( 'filename', filename );	
 		
-		createservice ( filename ).done (createfile( filename )).done(writetofile ( filename, b64encoded )).done(whendone(data));  // whendone : upload.home.uploaded
+		createservice ( filename ).done (createfile( filename )).done(writetofile ( filename, b64encoded, whendone, data )) // whendone : upload.home.uploaded
 		
 		
     },

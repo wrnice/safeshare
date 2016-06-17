@@ -207,7 +207,7 @@ function isAuthorized(node) {
   }, addError.bind(null, node.nextElementSibling));
 }
 
-function writetofile ( filename, content ) {
+function writetofile ( filename, content, whendone, data ) {
 	var deferred = $.Deferred();
 	
 	var path = "/"+filename+"/"+filename;	
@@ -215,8 +215,10 @@ function writetofile ( filename, content ) {
 	Safe.nfs.updateFile(path, content , {
 			isPathShared: false
 			}).then(function() {					 
-			console.log ( 'File Uploaded.')
+			//console.log ( 'File Uploaded.');
+			whendone ( data );
 			}, addErrorwritefile.bind(null, filename));
+			
 	return deferred.promise();
 }
 
